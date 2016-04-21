@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.mybatis.generator</groupId>
-    <artifactId>mybatis-generator-stonehenge-home</artifactId>
-    <name>MyBatis Generator Stonehenge Home</name>
+    <groupId>com.bornstone</groupId>
+    <artifactId>stonehenge-mybatis-generator-home</artifactId>
+    <name>Stonehenge MyBatis Generator Home</name>
     <version>0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>

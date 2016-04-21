@@ -23,14 +23,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.mybatis.generator</groupId>
-        <artifactId>mybatis-generator-stonehenge</artifactId>
+        <groupId>com.bornstone</groupId>
+        <artifactId>stonehenge-mybatis-generator</artifactId>
         <version>0.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>mybatis-generator-stonehenge-core</artifactId>
+    <groupId>com.bornstone</groupId>
+    <artifactId>stonehenge-mybatis-generator-core</artifactId>
     <packaging>jar</packaging>
-    <name>MyBatis Generator Stonehenge Core</name>
+    <name>Stonehenge MyBatis Generator Core</name>
 
     <build>
         <!-- this build creates and installs an instrumented JAR file
