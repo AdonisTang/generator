@@ -29,6 +29,7 @@
 
     <groupId>com.bornstone</groupId>
     <artifactId>stonehenge-mybatis-generator-maven-plugin</artifactId>
+    <version>0.4-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>Stonehenge MyBatis Generator Maven Plugin</name>
 
