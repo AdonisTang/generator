@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.mybatis.generator</groupId>
-  <artifactId>mybatis-generator-home</artifactId>
-  <name>MyBatis Generator Home</name>
-  <version>1.3.3-SNAPSHOT</version>
+    <artifactId>mybatis-generator-stonehenge-home</artifactId>
+    <name>MyBatis Generator Stonehenge Home</name>
+    <version>0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>core/</module>
