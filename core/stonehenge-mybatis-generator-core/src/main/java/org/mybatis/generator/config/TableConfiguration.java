@@ -76,6 +76,8 @@ public class TableConfiguration extends PropertyHolder {
      */
     private boolean updateByExampleStatementEnabled;
 
+    private boolean selectAllEnabled;
+
     /**
      * The column overrides.
      */
@@ -177,6 +179,7 @@ public class TableConfiguration extends PropertyHolder {
         deleteByExampleStatementEnabled = true;
         countByExampleStatementEnabled = true;
         updateByExampleStatementEnabled = true;
+        selectAllEnabled = false;
     }
 
     /**
@@ -448,7 +451,8 @@ public class TableConfiguration extends PropertyHolder {
                 || deleteByExampleStatementEnabled
                 || deleteByPrimaryKeyStatementEnabled
                 || countByExampleStatementEnabled
-                || updateByExampleStatementEnabled;
+                || updateByExampleStatementEnabled
+                || selectAllEnabled;
     }
 
     /**
@@ -682,6 +686,11 @@ public class TableConfiguration extends PropertyHolder {
                     "enableUpdateByExample", "false")); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
+        if (!selectAllEnabled) {
+            xmlElement.addAttribute(new Attribute(
+                    "enableSelectAll", "false")); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+
         if (stringHasValue(selectByPrimaryKeyQueryId)) {
             xmlElement.addAttribute(new Attribute(
                     "selectByPrimaryKeyQueryId", selectByPrimaryKeyQueryId)); //$NON-NLS-1$
@@ -798,6 +807,14 @@ public class TableConfiguration extends PropertyHolder {
     public void setUpdateByExampleStatementEnabled(
             boolean updateByExampleStatementEnabled) {
         this.updateByExampleStatementEnabled = updateByExampleStatementEnabled;
+    }
+
+    public boolean isSelectAllEnabled() {
+        return selectAllEnabled;
+    }
+
+    public void setSelectAllEnabled(boolean selectAllEnabled) {
+        this.selectAllEnabled = selectAllEnabled;
     }
 
     /**

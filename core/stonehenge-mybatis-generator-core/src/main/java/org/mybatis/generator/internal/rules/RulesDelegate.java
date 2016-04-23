@@ -146,6 +146,10 @@ public class RulesDelegate implements Rules {
         return rules.generateUpdateByPrimaryKeySelective();
     }
 
+    public boolean generateSelectAll() {
+        return rules.generateSelectAll();
+    }
+
     public boolean generateUpdateByPrimaryKeyWithBLOBs() {
         return rules.generateUpdateByPrimaryKeyWithBLOBs();
     }

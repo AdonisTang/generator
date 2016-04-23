@@ -116,8 +116,10 @@ public class SimpleJavaClientGenerator extends AbstractJavaClientGenerator {
     }
 
     protected void addSelectAllMethod(Interface interfaze) {
-        AbstractJavaMapperMethodGenerator methodGenerator = new SelectAllMethodGenerator();
-        initializeAndExecuteGenerator(methodGenerator, interfaze);
+        if (introspectedTable.getRules().generateSelectAll()) {
+            AbstractJavaMapperMethodGenerator methodGenerator = new SelectAllMethodGenerator();
+            initializeAndExecuteGenerator(methodGenerator, interfaze);
+        }
     }
 
     protected void addUpdateByPrimaryKeyMethod(Interface interfaze) {

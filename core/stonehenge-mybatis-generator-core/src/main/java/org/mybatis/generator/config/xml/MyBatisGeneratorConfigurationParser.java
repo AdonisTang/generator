@@ -236,6 +236,8 @@ public class MyBatisGeneratorConfigurationParser {
                 .getProperty("enableCountByExample"); //$NON-NLS-1$
         String enableUpdateByExample = attributes
                 .getProperty("enableUpdateByExample"); //$NON-NLS-1$
+        String enableSelectAll = attributes
+                .getProperty("enableSelectAll"); //$NON-NLS-1$
         String selectByPrimaryKeyQueryId = attributes
                 .getProperty("selectByPrimaryKeyQueryId"); //$NON-NLS-1$
         String selectByExampleQueryId = attributes
@@ -303,6 +305,11 @@ public class MyBatisGeneratorConfigurationParser {
         if (stringHasValue(enableUpdateByExample)) {
             tc.setUpdateByExampleStatementEnabled(
                     isTrue(enableUpdateByExample));
+        }
+
+        if (stringHasValue(enableSelectAll)) {
+            tc.setSelectAllEnabled(
+                    isTrue(enableSelectAll));
         }
 
         if (stringHasValue(selectByPrimaryKeyQueryId)) {

@@ -86,6 +86,12 @@ public interface Rules {
     boolean generateUpdateByPrimaryKeySelective();
 
     /**
+     * Implements the rule for generating the select all
+     * @return
+     */
+    boolean generateSelectAll();
+
+    /**
      * Implements the rule for generating the delete by primary key SQL Map
      * element and DAO method. If the table has a primary key, and the
      * deleteByPrimaryKey statement is allowed, then generate the element and
