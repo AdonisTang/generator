@@ -15,50 +15,31 @@
  */
 package org.mybatis.generator;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.mybatis.generator.api.MyBatisGenerator;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.xml.ConfigurationParser;
-import org.mybatis.generator.exception.InvalidConfigurationException;
 import org.mybatis.generator.internal.DefaultShellCallback;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-
 public class MyBatisGeneratorTest {
+    private static final Logger logger = Logger.getLogger(MyBatisGeneratorTest.class);
 
-    @Test(expected = InvalidConfigurationException.class)
+    @Test
     public void testGenerateMyBatis3() throws Exception {
-        List<String> warnings = new ArrayList<String>();
-        ConfigurationParser cp = new ConfigurationParser(warnings);
-        Configuration config = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generatorConfigMyBatis3.xml"));
-
-        DefaultShellCallback shellCallback = new DefaultShellCallback(true);
-
         try {
-            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
+            List<String> warnings = new ArrayList<String>();
+            boolean overwrite = true;
+            ConfigurationParser cp = new ConfigurationParser(warnings);
+            Configuration config = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generatorConfig.xml"));
+            DefaultShellCallback callback = new DefaultShellCallback(overwrite);
+            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
             myBatisGenerator.generate(null);
-        } catch (InvalidConfigurationException e) {
-            assertEquals(2, e.getErrors().size());
-            throw e;
-        }
-    }
-
-    @Test(expected = InvalidConfigurationException.class)
-    public void testGenerateIbatis2() throws Exception {
-        List<String> warnings = new ArrayList<String>();
-        ConfigurationParser cp = new ConfigurationParser(warnings);
-        Configuration config = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generatorConfigIbatis2.xml"));
-
-        DefaultShellCallback shellCallback = new DefaultShellCallback(true);
-
-        try {
-            MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, shellCallback, warnings);
-            myBatisGenerator.generate(null);
-        } catch (InvalidConfigurationException e) {
-            assertEquals(1, e.getErrors().size());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
             throw e;
         }
     }
