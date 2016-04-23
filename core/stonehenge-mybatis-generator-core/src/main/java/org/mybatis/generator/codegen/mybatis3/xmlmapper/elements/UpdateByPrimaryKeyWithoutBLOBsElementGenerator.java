@@ -16,13 +16,10 @@
 package org.mybatis.generator.codegen.mybatis3.xmlmapper.elements;
 
 import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.dom.OutputUtilities;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.MyBatis3FormattingUtilities;
-
-import java.util.Iterator;
 
 /**
  * @author Jeff Butler
@@ -53,37 +50,31 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
         sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
         answer.addElement(new TextElement(sb.toString()));
 
-        // set up for first column
-        sb.setLength(0);
-        sb.append("set "); //$NON-NLS-1$
+        XmlElement dynamicElement = new XmlElement("set"); //$NON-NLS-1$
+        answer.addElement(dynamicElement);
 
-        Iterator<IntrospectedColumn> iter;
-        if (isSimple) {
-            iter = introspectedTable.getNonPrimaryKeyColumns().iterator();
-        } else {
-            iter = introspectedTable.getBaseColumns().iterator();
-        }
-        while (iter.hasNext()) {
-            IntrospectedColumn introspectedColumn = iter.next();
+        for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
+            XmlElement isNotNullElement = new XmlElement("if"); //$NON-NLS-1$
+            sb.setLength(0);
+            sb.append(introspectedColumn.getJavaProperty()); //$NON-NLS-1$
+            sb.append(" != null"); //$NON-NLS-1$
+            isNotNullElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
+            dynamicElement.addElement(isNotNullElement);
 
+            sb.setLength(0);
             sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
+                    .getAliasedEscapedColumnName(introspectedColumn));
             sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+            sb.append(MyBatis3FormattingUtilities.getParameterClause(introspectedColumn)); //$NON-NLS-1$
+            sb.append(',');
 
-            if (iter.hasNext()) {
-                sb.append(',');
-            }
-
-            answer.addElement(new TextElement(sb.toString()));
-
-            // set up for the next column
-            if (iter.hasNext()) {
-                sb.setLength(0);
-                OutputUtilities.xmlIndent(sb, 1);
-            }
+            isNotNullElement.addElement(new TextElement(sb.toString()));
         }
+
+        //update_time
+        sb.setLength(0);
+        sb.append("created_time = now()");
+        dynamicElement.addElement(new TextElement(sb.toString()));
 
         boolean and = false;
         for (IntrospectedColumn introspectedColumn : introspectedTable
