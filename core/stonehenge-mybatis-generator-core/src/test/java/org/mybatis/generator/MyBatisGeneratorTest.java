@@ -38,6 +38,13 @@ public class MyBatisGeneratorTest {
             DefaultShellCallback callback = new DefaultShellCallback(overwrite);
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
             myBatisGenerator.generate(null);
+
+            if (!warnings.isEmpty()) {
+                logger.error("============================");
+                for (String warning : warnings) {
+                    logger.error(warning);
+                }
+            }
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             throw e;

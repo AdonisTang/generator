@@ -15,6 +15,7 @@
  */
 package org.mybatis.generator.api;
 
+import org.apache.log4j.Logger;
 import org.mybatis.generator.config.Configuration;
 import org.mybatis.generator.config.Context;
 import org.mybatis.generator.config.MergeConstants;
@@ -49,6 +50,7 @@ import static org.mybatis.generator.internal.util.messages.Messages.getString;
  * @see org.mybatis.generator.config.xml.ConfigurationParser
  */
 public class MyBatisGenerator {
+    private static final Logger logger = Logger.getLogger(MyBatisGenerator.class);
 
     /**
      * The configuration.
@@ -257,6 +259,7 @@ public class MyBatisGenerator {
                     source = gxf.getFormattedContent();
                 }
             } catch (ShellException e) {
+                logger.error(e.getMessage(), e);
                 warnings.add(e.getMessage());
                 continue;
             }
