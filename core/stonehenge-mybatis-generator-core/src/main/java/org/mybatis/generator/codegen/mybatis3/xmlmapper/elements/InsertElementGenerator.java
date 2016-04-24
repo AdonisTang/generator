@@ -99,8 +99,16 @@ public class InsertElementGenerator extends AbstractXmlElementGenerator {
 
             insertClause.append(MyBatis3FormattingUtilities
                     .getEscapedColumnName(introspectedColumn));
-            valuesClause.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+
+            //set created_time updated_time value
+            if (introspectedColumn.getActualColumnName().equalsIgnoreCase("created_time")
+                    || introspectedColumn.getActualColumnName().equalsIgnoreCase("updated_time")) {
+                valuesClause.append("now()");
+            } else {
+                valuesClause.append(MyBatis3FormattingUtilities
+                        .getParameterClause(introspectedColumn));
+            }
+
             if (i + 1 < columns.size()) {
                 if (!columns.get(i + 1).isIdentity()) {
                     insertClause.append(", "); //$NON-NLS-1$
