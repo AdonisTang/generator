@@ -350,6 +350,8 @@ public class MyBatisGeneratorConfigurationParser {
                 parseColumnOverride(tc, childNode);
             } else if ("ignoreColumn".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseIgnoreColumn(tc, childNode);
+            } else if ("unEditableColumn".equals(childNode.getNodeName())) { //$NON-NLS-1$
+                parseUnEditableColumn(tc, childNode);
             } else if ("generatedKey".equals(childNode.getNodeName())) { //$NON-NLS-1$
                 parseGeneratedKey(tc, childNode);
             } else if ("columnRenamingRule".equals(childNode.getNodeName())) { //$NON-NLS-1$
@@ -433,6 +435,13 @@ public class MyBatisGeneratorConfigurationParser {
         }
 
         tc.addIgnoredColumn(ic);
+    }
+
+    private void parseUnEditableColumn(TableConfiguration tc, Node node) {
+        Properties attributes = parseAttributes(node);
+        String column = attributes.getProperty("column"); //$NON-NLS-1$
+        UnEditableColumn ic = new UnEditableColumn(column);
+        tc.addUnEditableColumn(ic);
     }
 
     private void parseColumnRenamingRule(TableConfiguration tc, Node node) {

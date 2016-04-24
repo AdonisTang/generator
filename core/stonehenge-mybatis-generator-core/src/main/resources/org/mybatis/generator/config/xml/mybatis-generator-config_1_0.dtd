@@ -139,7 +139,7 @@
           The table element is used to specify a database table that will be the source information
           for a set of generated objects.
         -->
-        <!ELEMENT table (property*, generatedKey?, columnRenamingRule?, (columnOverride | ignoreColumn)*) >
+        <!ELEMENT table (property*, generatedKey?, columnRenamingRule?, (columnOverride | ignoreColumn)*, unEditableColumn*) >
         <!ATTLIST table
                 catalog CDATA #IMPLIED
                 schema CDATA #IMPLIED
@@ -184,6 +184,11 @@
         <!ATTLIST ignoreColumn
                 column CDATA #REQUIRED
                 delimitedColumnName CDATA #IMPLIED>
+
+        <!-- The unEditableColumn element is used to identify a column that should not be editable. -->
+        <!ELEMENT unEditableColumn EMPTY>
+        <!ATTLIST unEditableColumn
+                column CDATA #REQUIRED>
 
         <!--
           The generatedKey element is used to identify a column in the table whose value

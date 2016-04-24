@@ -89,6 +89,12 @@ public class TableConfiguration extends PropertyHolder {
     private Map<IgnoredColumn, Boolean> ignoredColumns;
 
     /**
+     * The un editable columns.
+     */
+    private Map<String, UnEditableColumn> unEditableColumns;
+
+
+    /**
      * The generated key.
      */
     private GeneratedKey generatedKey;
@@ -170,6 +176,10 @@ public class TableConfiguration extends PropertyHolder {
 
         columnOverrides = new ArrayList<ColumnOverride>();
         ignoredColumns = new HashMap<IgnoredColumn, Boolean>();
+
+        unEditableColumns = new HashMap<String, UnEditableColumn>();
+        unEditableColumns.put("created_time", new UnEditableColumn("created_time"));
+        unEditableColumns.put("updated_time", new UnEditableColumn("updated_time"));
 
         insertStatementEnabled = true;
         selectByPrimaryKeyStatementEnabled = true;
@@ -284,12 +294,31 @@ public class TableConfiguration extends PropertyHolder {
     }
 
     /**
+     * Checks if is un editable column.
+     *
+     * @param columnName the column name
+     * @return true, if is un editable column
+     */
+    public boolean isColumnUnEditable(String columnName) {
+        return unEditableColumns.containsKey(columnName);
+    }
+
+    /**
      * Adds the ignored column.
      *
      * @param ignoredColumn the ignored column
      */
     public void addIgnoredColumn(IgnoredColumn ignoredColumn) {
         ignoredColumns.put(ignoredColumn, Boolean.FALSE);
+    }
+
+    /**
+     * Adds the unEditable column.
+     *
+     * @param unEditableColumn the unEditableColumn
+     */
+    public void addUnEditableColumn(UnEditableColumn unEditableColumn) {
+        unEditableColumns.put(unEditableColumn.getColumnName(), unEditableColumn);
     }
 
     /**
@@ -735,6 +764,12 @@ public class TableConfiguration extends PropertyHolder {
             }
         }
 
+        if (unEditableColumns.size() > 0) {
+            for (String column : unEditableColumns.keySet()) {
+                xmlElement.addElement(unEditableColumns.get(column).toXmlElement());
+            }
+        }
+
         if (columnOverrides.size() > 0) {
             for (ColumnOverride columnOverride : columnOverrides) {
                 xmlElement.addElement(columnOverride.toXmlElement());
@@ -861,6 +896,10 @@ public class TableConfiguration extends PropertyHolder {
 
         for (IgnoredColumn ignoredColumn : ignoredColumns.keySet()) {
             ignoredColumn.validate(errors, fqTableName);
+        }
+
+        for (String column : unEditableColumns.keySet()) {
+            unEditableColumns.get(column).validate(errors, fqTableName);
         }
     }
 

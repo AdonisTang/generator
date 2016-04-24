@@ -54,6 +54,11 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
         answer.addElement(dynamicElement);
 
         for (IntrospectedColumn introspectedColumn : introspectedTable.getNonPrimaryKeyColumns()) {
+            //skip unEditableColumn
+            if (introspectedTable.getTableConfiguration().isColumnUnEditable(introspectedColumn.getActualColumnName())) {
+                continue;
+            }
+
             XmlElement isNotNullElement = new XmlElement("if"); //$NON-NLS-1$
             sb.setLength(0);
             sb.append(introspectedColumn.getJavaProperty()); //$NON-NLS-1$
