@@ -150,6 +150,7 @@
                 enableSelectByPrimaryKey CDATA #IMPLIED
                 enableSelectByExample CDATA #IMPLIED
                 enableUpdateByPrimaryKey CDATA #IMPLIED
+                enableDelete CDATA #IMPLIED
                 enableDeleteByPrimaryKey CDATA #IMPLIED
                 enableDeleteByExample CDATA #IMPLIED
                 enableCountByExample CDATA #IMPLIED

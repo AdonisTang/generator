@@ -127,6 +127,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.bornstone</groupId>
+            <artifactId>stonehenge-manager</artifactId>
+            <version>0.4-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
             <scope>provided</scope>

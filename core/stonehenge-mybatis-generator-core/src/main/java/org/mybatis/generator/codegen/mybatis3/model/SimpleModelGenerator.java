@@ -15,13 +15,11 @@
  */
 package org.mybatis.generator.codegen.mybatis3.model;
 
-import org.mybatis.generator.api.CommentGenerator;
-import org.mybatis.generator.api.FullyQualifiedTable;
-import org.mybatis.generator.api.IntrospectedColumn;
-import org.mybatis.generator.api.Plugin;
+import org.mybatis.generator.api.*;
 import org.mybatis.generator.api.dom.java.*;
 import org.mybatis.generator.codegen.AbstractJavaGenerator;
 import org.mybatis.generator.codegen.RootClassInfo;
+import org.mybatis.generator.config.TableConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +49,7 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
         topLevelClass.setVisibility(JavaVisibility.PUBLIC);
         commentGenerator.addJavaFileComment(topLevelClass);
 
-        FullyQualifiedJavaType superClass = getSuperClass();
+        FullyQualifiedJavaType superClass = getSuperClass(introspectedTable);
         if (superClass != null) {
             topLevelClass.setSuperClass(superClass);
             topLevelClass.addImportedType(superClass);
@@ -109,9 +107,31 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
         return answer;
     }
 
-    private FullyQualifiedJavaType getSuperClass() {
+    private FullyQualifiedJavaType getSuperClass(IntrospectedTable introspectedTable) {
         FullyQualifiedJavaType superClass;
-        String rootClass = getRootClass();
+
+        String rootClass = null;
+
+        IntrospectedColumn idColumn = introspectedTable.getPrimaryKeyColumns().get(0);
+        String idColumnName = idColumn.getActualColumnName();
+        if (!idColumnName.equalsIgnoreCase("id")) {
+            rootClass = getRootClass();
+        } else {
+            if (introspectedTable.getTableConfiguration().isDeleteEnabled()) {
+                rootClass = "com.bornstone.stonehenge.entity.DeleteAbleEntity";
+            } else {
+                rootClass = "com.bornstone.stonehenge.entity.BaseEntity";
+            }
+
+            if (idColumn.getFullyQualifiedJavaType().getShortName().equalsIgnoreCase("Integer")) {
+                rootClass += "<Integer>";
+            } else if (idColumn.getFullyQualifiedJavaType().getShortName().equalsIgnoreCase("Long")) {
+                rootClass += "<Long>";
+            } else {
+                return null;
+            }
+        }
+
         if (rootClass != null) {
             superClass = new FullyQualifiedJavaType(rootClass);
         } else {
@@ -120,6 +140,11 @@ public class SimpleModelGenerator extends AbstractJavaGenerator {
 
         return superClass;
     }
+
+    private String getRootClass(TableConfiguration tableConfiguration) {
+        return null;
+    }
+
 
     private void addParameterizedConstructor(TopLevelClass topLevelClass) {
         Method method = new Method();

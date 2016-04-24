@@ -228,6 +228,8 @@ public class MyBatisGeneratorConfigurationParser {
                 .getProperty("enableSelectByExample"); //$NON-NLS-1$
         String enableUpdateByPrimaryKey = attributes
                 .getProperty("enableUpdateByPrimaryKey"); //$NON-NLS-1$
+        String enableDelete = attributes
+                .getProperty("enableDelete"); //$NON-NLS-1$
         String enableDeleteByPrimaryKey = attributes
                 .getProperty("enableDeleteByPrimaryKey"); //$NON-NLS-1$
         String enableDeleteByExample = attributes
@@ -285,6 +287,11 @@ public class MyBatisGeneratorConfigurationParser {
         if (stringHasValue(enableUpdateByPrimaryKey)) {
             tc.setUpdateByPrimaryKeyStatementEnabled(
                     isTrue(enableUpdateByPrimaryKey));
+        }
+
+        if (stringHasValue(enableDelete)) {
+            tc.setDeleteEnabled(
+                    isTrue(enableDelete));
         }
 
         if (stringHasValue(enableDeleteByPrimaryKey)) {

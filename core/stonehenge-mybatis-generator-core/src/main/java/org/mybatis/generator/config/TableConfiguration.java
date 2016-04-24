@@ -56,6 +56,8 @@ public class TableConfiguration extends PropertyHolder {
      */
     private boolean updateByPrimaryKeyStatementEnabled;
 
+    private boolean deleteEnabled;
+
     /**
      * The delete by primary key statement enabled.
      */
@@ -185,6 +187,7 @@ public class TableConfiguration extends PropertyHolder {
         selectByPrimaryKeyStatementEnabled = true;
         selectByExampleStatementEnabled = true;
         updateByPrimaryKeyStatementEnabled = true;
+        deleteEnabled = true;
         deleteByPrimaryKeyStatementEnabled = false;
         deleteByExampleStatementEnabled = true;
         countByExampleStatementEnabled = true;
@@ -695,6 +698,11 @@ public class TableConfiguration extends PropertyHolder {
                     "enableUpdateByPrimaryKey", "false")); //$NON-NLS-1$ //$NON-NLS-2$
         }
 
+        if (!deleteEnabled) {
+            xmlElement.addAttribute(new Attribute(
+                    "enableDelete", "true")); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+
         if (!deleteByPrimaryKeyStatementEnabled) {
             xmlElement.addAttribute(new Attribute(
                     "enableDeleteByPrimaryKey", "false")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -850,6 +858,14 @@ public class TableConfiguration extends PropertyHolder {
 
     public void setSelectAllEnabled(boolean selectAllEnabled) {
         this.selectAllEnabled = selectAllEnabled;
+    }
+
+    public boolean isDeleteEnabled() {
+        return deleteEnabled;
+    }
+
+    public void setDeleteEnabled(boolean deleteEnabled) {
+        this.deleteEnabled = deleteEnabled;
     }
 
     /**

@@ -30,6 +30,7 @@
                             targetProject="/home/king/work/code/java/king/mybatis-generator/generator/core/stonehenge-mybatis-generator-core/generated-sources">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
+            <property name="rootClass" value="com.bornstone.stonehenge.entity.BaseEntity"/>
         </javaModelGenerator>
         <!--生成SQLMAP文件 -->
         <sqlMapGenerator targetPackage="mybatis"
@@ -48,6 +49,7 @@
         <!--
             默认值：
             enableSelectAll:false
+            enableDelete:true
         -->
         <!-- 征稿信息 相关 -->
         <table tableName="test" domainObjectName="Test" enableSelectAll="true">
