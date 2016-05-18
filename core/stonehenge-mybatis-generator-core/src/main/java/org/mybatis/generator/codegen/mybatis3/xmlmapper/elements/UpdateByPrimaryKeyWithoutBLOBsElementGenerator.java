@@ -78,7 +78,7 @@ public class UpdateByPrimaryKeyWithoutBLOBsElementGenerator extends
 
         //update_time
         sb.setLength(0);
-        sb.append("created_time = now()");
+        sb.append("updated_time = now()");
         dynamicElement.addElement(new TextElement(sb.toString()));
 
         boolean and = false;
