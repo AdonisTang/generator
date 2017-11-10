@@ -34,7 +34,7 @@ public class MyBatisGeneratorTest {
             List<String> warnings = new ArrayList<String>();
             boolean overwrite = true;
             ConfigurationParser cp = new ConfigurationParser(warnings);
-            Configuration config = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generatorConfig.xml"));
+            Configuration config = cp.parseConfiguration(this.getClass().getClassLoader().getResourceAsStream("generatorConfig-subscribertool.xml"));
             DefaultShellCallback callback = new DefaultShellCallback(overwrite);
             MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config, callback, warnings);
             myBatisGenerator.generate(null);
